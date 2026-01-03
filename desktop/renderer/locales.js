@@ -1,0 +1,227 @@
+export const locales = {
+    en: {
+        code: 'en',
+        name: 'English',
+        menu: { selectLanguage: 'Select Language' },
+        prompts: {
+            enterPhone: 'Enter target phone number (5XXXXXXXXX)',
+            enterAmount: 'How many SMS bombs to deploy',
+            enterDelay: 'Delay between requests in seconds',
+            invalidNumber: 'Please enter a valid number',
+            invalidPhone: 'Invalid phone format. Use 5XXXXXXXXX (10 digits)'
+        },
+        status: {
+            missionStarted: 'MISSION STARTED - SMS BOMBING IN PROGRESS',
+            deploying: 'Deploying SMS bombs to target',
+            hit: 'HIT',
+            miss: 'MISS',
+            deployed: 'DEPLOYED',
+            failed: 'FAILED',
+            target: 'Target'
+        },
+        results: {
+            missionComplete: 'MISSION COMPLETE',
+            totalAttempts: 'Total Attempts',
+            successful: 'Successful',
+            failed: 'Failed',
+            successRate: 'Success Rate'
+        },
+        banner: {
+            operationParams: 'OPERATION PARAMETERS',
+            targetIdentifier: 'TARGET IDENTIFIER',
+            payloadQuantity: 'PAYLOAD QUANTITY',
+            requestDelay: 'REQUEST DELAY',
+            maxSpeed: 'MAX SPEED',
+            warning: 'WARNING: UNAUTHORIZED USE IS STRICTLY PROHIBITED',
+            disclaimer: 'THIS IS FOR EDUCATIONAL PURPOSES ONLY - USE AT YOUR OWN RISK',
+            protocol: 'PROTOCOL',
+            protocolType: 'SMS BOMBARDMENT',
+            status: 'STATUS',
+            readyStatus: 'PRIMED AND READY FOR DEPLOYMENT',
+            smsBombs: 'SMS BOMBS',
+            randomMessages: [
+                'Initializing kernel modules...',
+                'Bypassing security protocols...',
+                'Establishing encrypted tunnel...',
+                'Loading payload vectors...',
+                'Configuring attack parameters...',
+                'Obfuscating network signature...',
+                'Disabling trace routes...',
+                'Activating anonymous proxies...',
+                'Monitoring network traffic...',
+                'Checking proxy server status...',
+                'Updating service endpoints...',
+                'Validating API connections...',
+                'Synchronizing time servers...',
+                'Scanning for active nodes...',
+                'Refreshing connection pool...'
+            ],
+            loadingMessages: [
+                'Loading spammer arsenal',
+                'Initializing attack vectors',
+                'Preparing payload modules',
+                'Scanning service endpoints',
+                'Validating connection pool',
+                'Optimizing request threads',
+                'Loading target database',
+                'Preparing SMS protocols',
+                'Initializing network stack',
+                'Loading encryption keys'
+            ]
+        },
+        labels: {
+            bomber: 'BOMBER',
+            payload: 'PAYLOAD',
+            delay: 'DELAY',
+            error: 'ERROR',
+            system: 'SYSTEM',
+            ready: 'READY',
+            attacking: 'ATTACKING',
+            complete: 'COMPLETE'
+        },
+        ui: {
+            launchAttack: 'LAUNCH ATTACK',
+            abortMission: 'ABORT MISSION',
+            targetPhone: 'TARGET PHONE',
+            phoneHint: 'Enter 10-digit phone number',
+            amountHint: 'Number of SMS bombs to deploy',
+            delayHint: '0 = Maximum speed',
+            missionStats: 'MISSION STATS',
+            total: 'TOTAL',
+            success: 'SUCCESS',
+            failed: 'FAILED',
+            update: 'UPDATE',
+            checking: 'CHECKING...',
+            downloading: 'DOWNLOAD',
+            downloadingProgress: 'DOWNLOADING...',
+            install: 'INSTALL',
+            restartInstall: 'RESTART & INSTALL',
+            retry: 'RETRY',
+            ok: 'OK'
+        },
+        updates: {
+            available: '✨ Update available: v{version}',
+            downloaded: '✅ Update downloaded! Click to restart and install.',
+            notAvailable: '✓ You are using the latest version',
+            checking: '🔍 Checking for updates...',
+            downloadingProgress: '⬇️ Downloading: {percent}% ({transferred}MB / {total}MB)',
+            errorNetwork: '❌ No internet connection. Please check your network.',
+            errorNotFound: '❌ Update server not found. Please check GitHub releases.',
+            errorRateLimit: '❌ Rate limit exceeded. Please try again later.',
+            errorGeneric: '❌ {error}'
+        }
+    },
+    tr: {
+        code: 'tr',
+        name: 'Türkçe',
+        menu: { selectLanguage: 'Dil Seçin' },
+        prompts: {
+            enterPhone: 'Hedef telefon numarasını girin (5XXXXXXXXX)',
+            enterAmount: 'Kaç SMS bombası gönderilecek',
+            enterDelay: 'İstekler arası gecikme (saniye)',
+            invalidNumber: 'Lütfen geçerli bir sayı girin',
+            invalidPhone: 'Geçersiz telefon formatı. 5XXXXXXXXX (10 hane)'
+        },
+        status: {
+            missionStarted: 'GÖREV BAŞLADI - SMS BOMBALAMA DEVAM EDİYOR',
+            deploying: 'Hedefe SMS bombaları gönderiliyor',
+            hit: 'İSABET',
+            miss: 'ISKALANDI',
+            deployed: 'GÖNDERİLDİ',
+            failed: 'BAŞARISIZ',
+            target: 'Hedef'
+        },
+        results: {
+            missionComplete: 'GÖREV TAMAMLANDI',
+            totalAttempts: 'Toplam Deneme',
+            successful: 'Başarılı',
+            failed: 'Başarısız',
+            successRate: 'Başarı Oranı'
+        },
+        banner: {
+            operationParams: 'OPERASYON PARAMETRELERİ',
+            targetIdentifier: 'HEDEF NUMARASI',
+            payloadQuantity: 'SMS MİKTARI',
+            requestDelay: 'İSTEK GECİKMESİ',
+            maxSpeed: 'MAKSİMUM HIZ',
+            warning: 'UYARI: YETKİSİZ KULLANIM KESİNLİKLE YASAKTIR',
+            disclaimer: 'BU SADECE EĞİTİM AMAÇLIDIR - KENDİ RİSKİNİZDE KULLANIN',
+            protocol: 'PROTOKOL',
+            protocolType: 'SMS BOMBARDIMAN',
+            status: 'DURUM',
+            readyStatus: 'HAZIR VE KONUŞLANDIRMAYA HAZIR',
+            smsBombs: 'SMS BOMBALARI',
+            randomMessages: [
+                'Çekirdek modülleri başlatılıyor...',
+                'Güvenlik protokollerini atlanıyor...',
+                'Şifreli tünel kuruluyor...',
+                'Yük vektörleri yükleniyor...',
+                'Saldırı parametreleri yapılandırılıyor...',
+                'Ağ imzası gizleniyor...',
+                'İz takipleri devre dışı bırakılıyor...',
+                'Anonim proxy\'ler etkinleştiriliyor...',
+                'Ağ trafiği izleniyor...',
+                'Proxy sunucu durumu kontrol ediliyor...',
+                'Servis uç noktaları güncelleniyor...',
+                'API bağlantıları doğrulanıyor...',
+                'Zaman sunucuları senkronize ediliyor...',
+                'Aktif düğümler taranıyor...',
+                'Bağlantı havuzu yenileniyor...'
+            ],
+            loadingMessages: [
+                'Spammer cephaneliği yükleniyor',
+                'Saldırı vektörleri başlatılıyor',
+                'Yük modülleri hazırlanıyor',
+                'Servis uç noktaları taranıyor',
+                'Bağlantı havuzu doğrulanıyor',
+                'İstek iş parçacıkları optimize ediliyor',
+                'Hedef veritabanı yükleniyor',
+                'SMS protokolleri hazırlanıyor',
+                'Ağ yığını başlatılıyor',
+                'Şifreleme anahtarları yükleniyor'
+            ]
+        },
+        labels: {
+            bomber: 'BOMBALAYICI',
+            payload: 'YÜK',
+            delay: 'GECİKME',
+            error: 'HATA',
+            system: 'SİSTEM',
+            ready: 'HAZIR',
+            attacking: 'SALDIRI',
+            complete: 'TAMAMLANDI'
+        },
+        ui: {
+            launchAttack: 'SALDIRIYI BAŞLAT',
+            abortMission: 'GÖREVİ İPTAL ET',
+            targetPhone: 'HEDEF TELEFON',
+            phoneHint: '10 haneli telefon numarası girin',
+            amountHint: 'Gönderilecek SMS bombası sayısı',
+            delayHint: '0 = Maksimum hız',
+            missionStats: 'GÖREV İSTATİSTİKLERİ',
+            total: 'TOPLAM',
+            success: 'BAŞARILI',
+            failed: 'BAŞARISIZ',
+            update: 'GÜNCELLE',
+            checking: 'KONTROL EDİLİYOR...',
+            downloading: 'İNDİR',
+            downloadingProgress: 'İNDİRİLİYOR...',
+            install: 'YÜKLE',
+            restartInstall: 'YENİDEN BAŞLAT VE YÜKLE',
+            retry: 'TEKRAR DENE',
+            ok: 'TAMAM'
+        },
+        updates: {
+            available: '✨ Güncelleme mevcut: v{version}',
+            downloaded: '✅ Güncelleme indirildi! Yeniden başlatmak için tıklayın.',
+            notAvailable: '✓ En son sürümü kullanıyorsunuz',
+            checking: '🔍 Güncellemeler kontrol ediliyor...',
+            downloadingProgress: '⬇️ İndiriliyor: {percent}% ({transferred}MB / {total}MB)',
+            errorNetwork: '❌ İnternet bağlantısı yok. Ağınızı kontrol edin.',
+            errorNotFound: '❌ Güncelleme sunucusu bulunamadı. GitHub releases kontrol edin.',
+            errorRateLimit: '❌ İstek limiti aşıldı. Lütfen daha sonra tekrar deneyin.',
+            errorGeneric: '❌ {error}'
+        }
+    }
+};
+
