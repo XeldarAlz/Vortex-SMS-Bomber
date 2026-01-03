@@ -69,53 +69,6 @@ npm install
 npm start
 ```
 
-## Nasil Kullanilir
-
-### Masaustu Uygulamasi
-
-1. [Releases](https://github.com/XeldarAlz/Vortex-SMS-Bomber/releases) sayfasindan indirin ve kurun
-2. Uygulamayi baslatin
-3. Dilinizi secin (Turkce veya Ingilizce)
-4. Hedef telefon numarasini girin (10 hane, 5 ile baslayan)
-5. Gonderilecek mesaj sayisini belirleyin
-6. Isterseniz mesajlar arasi gecikme ayarlayin
-7. **SALDIRIYI BASLAT** butonuna tiklayin ve ilerlemeyi izleyin
-
-### Terminal Versiyonu
-
-```bash
-npm start
-# veya
-node index.js
-```
-
-Ekrandaki yonergeleri takip ederek yapilandirin ve calistirin.
-
-## Gelistirme
-
-### Kaynaktan Derleme
-
-```bash
-# Projeyi klonlayin ve girin
-git clone https://github.com/XeldarAlz/Vortex-SMS-Bomber.git
-cd Vortex-SMS-Bomber
-
-# Desktop bagimliliklarini yukleyin
-cd desktop
-npm install
-
-# Gelistirme modunda calistirin
-npm start
-
-# Windows calistirilabilir dosyalarini derleyin
-npm run build:win
-```
-
-Derleme ciktisi `desktop/build/` klasorunde:
-- `VortexSMS-Setup-x.x.x.exe` - NSIS kurulum dosyasi
-- `VortexSMS-Portable-x.x.x.exe` - Tasinabilir calistirilabilir
-- `latest.yml` - Otomatik guncelleyici manifest dosyasi
-
 ## Katkida Bulunma
 
 Katkilarinizi bekliyoruz! Detayli kilavuz icin [CONTRIBUTE_TR.md](CONTRIBUTE_TR.md) dosyasina bakin.

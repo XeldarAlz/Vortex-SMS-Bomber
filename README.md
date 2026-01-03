@@ -69,53 +69,6 @@ npm install
 npm start
 ```
 
-## How to Use
-
-### Desktop App
-
-1. Download and install from [Releases](https://github.com/XeldarAlz/Vortex-SMS-Bomber/releases)
-2. Launch the app
-3. Choose your language (English or Turkish)
-4. Enter the target phone number (10 digits, starting with 5)
-5. Set the number of messages to send
-6. Optionally set a delay between messages
-7. Click **LAUNCH ATTACK** and watch the progress
-
-### Terminal Version
-
-```bash
-npm start
-# or
-node index.js
-```
-
-Follow the on-screen prompts to configure and run.
-
-## Development
-
-### Building from Source
-
-```bash
-# Clone and enter the project
-git clone https://github.com/XeldarAlz/Vortex-SMS-Bomber.git
-cd Vortex-SMS-Bomber
-
-# Install desktop dependencies
-cd desktop
-npm install
-
-# Run in development mode
-npm start
-
-# Build Windows executables
-npm run build:win
-```
-
-Build output will be in `desktop/build/`:
-- `VortexSMS-Setup-x.x.x.exe` - NSIS installer
-- `VortexSMS-Portable-x.x.x.exe` - Portable executable
-- `latest.yml` - Auto-updater manifest
-
 ## Contributing
 
 We welcome contributions! See [CONTRIBUTE.md](CONTRIBUTE.md) for detailed guidelines.
