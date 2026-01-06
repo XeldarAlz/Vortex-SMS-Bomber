@@ -1,0 +1,95 @@
+{
+  "name": "vortexsms-desktop",
+  "version": "1.0.0",
+  "description": "VortexSMS Desktop - Advanced SMS Spammer with Console-like GUI",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "start:dev": "electron . --dev",
+    "copy-src": "node scripts/copy-src.js",
+    "build": "npm run copy-src && electron-builder --win",
+    "build:win": "npm run copy-src && electron-builder --win"
+  },
+  "author": {
+    "name": "XeldarAlz",
+    "email": "xeldaralz@github.com"
+  },
+  "homepage": "https://github.com/XeldarAlz/Vortex-SMS-Bomber",
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/XeldarAlz/Vortex-SMS-Bomber.git"
+  },
+  "keywords": [
+    "sms",
+    "spammer",
+    "vortex",
+    "sms-bomber",
+    "electron",
+    "desktop",
+    "gui",
+    "educational"
+  ],
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1",
+    "rcedit": "^5.0.2"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "axios": "^1.7.7",
+    "chalk": "^4.1.2",
+    "dayjs": "^1.11.10",
+    "electron-updater": "^6.6.2"
+  },
+  "build": {
+    "appId": "com.xeldaralz.vortexsms",
+    "productName": "VortexSMS",
+    "directories": {
+      "output": "build"
+    },
+    "files": [
+      "**/*",
+      "!build/**",
+      "!dist/**",
+      "!scripts/**",
+      "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+      "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+      "!**/node_modules/*.d.ts",
+      "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
+      "!.editorconfig",
+      "!**/._*",
+      "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}"
+    ],
+    "afterPack": "./scripts/apply-icon.js",
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "assets/icon.ico",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "${productName}-Portable-${version}.${ext}"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "XeldarAlz",
+      "repo": "Vortex-SMS-Bomber"
+    }
+  }
+}

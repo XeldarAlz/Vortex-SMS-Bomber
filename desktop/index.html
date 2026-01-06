@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
+    <title>VortexSMS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="title-bar">
+        <div class="title-bar-drag">
+            <div class="title-icon">⚡</div>
+            <span class="title-text">VORTEX<span class="accent">SMS</span> v1.0.0</span>
+        </div>
+        <div class="title-bar-controls">
+            <button class="control-btn minimize" id="minimize-btn" title="Minimize">
+                <svg width="12" height="12" viewBox="0 0 12 12">
+                    <rect fill="currentColor" width="10" height="1" x="1" y="6"/>
+                </svg>
+            </button>
+            <button class="control-btn maximize" id="maximize-btn" title="Maximize">
+                <svg width="12" height="12" viewBox="0 0 12 12">
+                    <rect stroke="currentColor" fill="none" width="9" height="9" x="1.5" y="1.5"/>
+                </svg>
+            </button>
+            <button class="control-btn close" id="close-btn" title="Close">
+                <svg width="12" height="12" viewBox="0 0 12 12">
+                    <polygon fill="currentColor" points="11,1.54 10.46,1 6,5.46 1.54,1 1,1.54 5.46,6 1,10.46 1.54,11 6,6.54 10.46,11 11,10.46 6.54,6"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="terminal-panel">
+            <div class="terminal-header">
+                <div class="terminal-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <span class="terminal-title">VORTEX TERMINAL</span>
+                <div class="terminal-status">
+                    <span class="status-indicator" id="status-indicator"></span>
+                    <span id="status-text">READY</span>
+                </div>
+            </div>
+            <div class="terminal-body" id="terminal">
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <div class="section language-section" id="language-section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <span>SELECT LANGUAGE</span>
+                </div>
+                <div class="language-buttons">
+                    <button class="lang-btn" data-lang="en">
+                        <span class="flag">🇬🇧</span>
+                        <span>English</span>
+                    </button>
+                    <button class="lang-btn" data-lang="tr">
+                        <span class="flag">🇹🇷</span>
+                        <span>Türkçe</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="section input-section hidden" id="input-section">
+                <div class="section-header">
+                    <span class="section-icon">🎯</span>
+                    <span id="input-section-title">OPERATION PARAMETERS</span>
+                </div>
+                
+                <div class="input-group">
+                    <label for="phone-input">
+                        <span class="label-icon">📱</span>
+                        <span id="phone-label">TARGET PHONE</span>
+                    </label>
+                    <div class="input-wrapper">
+                        <span class="input-prefix">+90</span>
+                        <input type="tel" id="phone-input" placeholder="5XXXXXXXXX" maxlength="10" autocomplete="off">
+                    </div>
+                    <span class="input-hint" id="phone-hint">Enter 10-digit phone number</span>
+                </div>
+
+                <div class="input-group">
+                    <label for="amount-input">
+                        <span class="label-icon">💣</span>
+                        <span id="amount-label">PAYLOAD QUANTITY</span>
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="number" id="amount-input" placeholder="10" min="1" max="100" value="10">
+                        <span class="input-suffix">SMS</span>
+                    </div>
+                    <span class="input-hint" id="amount-hint">Number of SMS bombs to deploy</span>
+                </div>
+
+                <div class="input-group">
+                    <label for="delay-input">
+                        <span class="label-icon">⏱️</span>
+                        <span id="delay-label">REQUEST DELAY</span>
+                    </label>
+                    <div class="input-wrapper">
+                        <input type="number" id="delay-input" placeholder="0" min="0" max="60" value="0">
+                        <span class="input-suffix">SEC</span>
+                    </div>
+                    <span class="input-hint" id="delay-hint">0 = Maximum speed</span>
+                </div>
+
+                <button class="launch-btn" id="launch-btn">
+                    <span class="btn-icon">🚀</span>
+                    <span id="launch-text">LAUNCH ATTACK</span>
+                </button>
+
+                <button class="stop-btn hidden" id="stop-btn">
+                    <span class="btn-icon">⛔</span>
+                    <span id="stop-text">ABORT MISSION</span>
+                </button>
+            </div>
+
+            <div class="section stats-section hidden" id="stats-section">
+                <div class="section-header">
+                    <span class="section-icon">📊</span>
+                    <span id="stats-title">MISSION STATS</span>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label" id="stat-total-label">TOTAL</span>
+                        <span class="stat-value" id="stat-total">0</span>
+                    </div>
+                    <div class="stat-item success">
+                        <span class="stat-label" id="stat-success-label">SUCCESS</span>
+                        <span class="stat-value" id="stat-success">0</span>
+                    </div>
+                    <div class="stat-item error">
+                        <span class="stat-label" id="stat-failed-label">FAILED</span>
+                        <span class="stat-value" id="stat-failed">0</span>
+                    </div>
+                    <div class="stat-item accent">
+                        <span class="stat-label" id="stat-rate-label">SUCCESS RATE</span>
+                        <span class="stat-value" id="stat-rate">0%</span>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                    <span class="progress-text" id="progress-text">0%</span>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                <div class="footer-line"></div>
+                <div class="footer-content">
+                    <span class="footer-text">⚔️ Developed by XeldarAlz</span>
+                    <span class="footer-link">github.com/XeldarAlz</span>
+                </div>
+                <div class="update-notification hidden" id="update-notification">
+                    <span class="update-text" id="update-text"></span>
+                    <button class="update-btn" id="update-btn">
+                        <span id="update-btn-text">UPDATE</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="volume-control">
+        <button class="update-button" id="update-button" title="Check for updates">
+            <span class="update-button-icon">🔄</span>
+            <span class="update-button-text" id="update-button-text">UPDATE</span>
+        </button>
+        <div class="volume-control-center">
+            <div class="volume-icon">🔊</div>
+            <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="100" step="1">
+            <span class="volume-value" id="volume-value">100%</span>
+        </div>
+    </div>
+
+    <script type="module" src="renderer/app.js"></script>
+</body>
+</html>
+

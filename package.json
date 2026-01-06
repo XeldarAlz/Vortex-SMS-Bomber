@@ -1,0 +1,36 @@
+{
+  "name": "vortexsms",
+  "version": "1.0.0",
+  "description": "VortexSMS - Advanced SMS spammer tool for educational purposes. Use responsibly and within legal frameworks.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "desktop": "cd desktop && npm start",
+    "desktop:install": "cd desktop && npm install",
+    "build:win": "cd desktop && npm run build:win"
+  },
+  "keywords": [
+    "sms",
+    "spammer",
+    "vortex",
+    "sms-bomber",
+    "terminal",
+    "cli",
+    "educational"
+  ],
+  "author": "XeldarAlz",
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/XeldarAlz/Vortex-SMS-Bomber.git"
+  },
+  "homepage": "https://github.com/XeldarAlz/Vortex-SMS-Bomber",
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "axios": "^1.7.7",
+    "chalk": "^4.1.2",
+    "dayjs": "^1.11.10",
+    "readline-sync": "^1.4.10"
+  }
+}
