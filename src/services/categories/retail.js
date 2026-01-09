@@ -404,6 +404,106 @@ const retailServices = [
         }),
         timeout: 6000,
         successCodes: [200]
+    },
+    {
+        serviceName: 'Hatemoglu',
+        url: 'https://www.hatemoglu.com:443/api/member/sendOtp',
+        method: 'POST',
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            Accept: '*/*',
+            Referer: 'https://www.hatemoglu.com/',
+            'Content-Type': 'application/json',
+            Origin: 'https://www.hatemoglu.com',
+            Dnt: '1',
+            'Sec-Gpc': '1',
+            'Sec-Fetch-Dest': 'empty',
+            'Sec-Fetch-Mode': 'cors',
+            'Sec-Fetch-Site': 'same-origin',
+            Priority: 'u=0',
+            Te: 'trailers'
+        },
+        json: (phone) => ({
+            Phone: phone,
+            XID: ''
+        }),
+        timeout: 6000,
+        successCodes: [200]
+    },
+    {
+        serviceName: 'Dagi',
+        url: 'https://www.dagi.com.tr:443/api/member/sendOtp',
+        method: 'POST',
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            Accept: '*/*',
+            Referer: 'https://www.dagi.com.tr/',
+            'Content-Type': 'application/json',
+            Origin: 'https://www.dagi.com.tr',
+            Dnt: '1',
+            'Sec-Gpc': '1',
+            'Sec-Fetch-Dest': 'empty',
+            'Sec-Fetch-Mode': 'cors',
+            'Sec-Fetch-Site': 'same-origin',
+            Priority: 'u=0',
+            Te: 'trailers'
+        },
+        json: (phone) => ({
+            Phone: phone,
+            XID: ''
+        }),
+        timeout: 6000,
+        successCodes: [200]
+    },
+    {
+        serviceName: 'Kip',
+        url: 'https://www.kip.com.tr:443/api/member/sendOtp',
+        method: 'POST',
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            Accept: '*/*',
+            Referer: 'https://www.kip.com.tr/',
+            'Content-Type': 'application/json',
+            Origin: 'https://www.kip.com.tr',
+            Dnt: '1',
+            'Sec-Gpc': '1',
+            'Sec-Fetch-Dest': 'empty',
+            'Sec-Fetch-Mode': 'cors',
+            'Sec-Fetch-Site': 'same-origin',
+            Priority: 'u=0',
+            Te: 'trailers'
+        },
+        json: (phone) => ({
+            Phone: phone,
+            XID: ''
+        }),
+        timeout: 6000,
+        successCodes: [200]
+    },
+    {
+        serviceName: 'Ramsey',
+        url: 'https://www.ramsey.com.tr:443/api/member/sendOtp',
+        method: 'POST',
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            Accept: '*/*',
+            Referer: 'https://www.ramsey.com.tr/',
+            'Content-Type': 'application/json',
+            Origin: 'https://www.ramsey.com.tr',
+            Dnt: '1',
+            'Sec-Gpc': '1',
+            'Sec-Fetch-Dest': 'empty',
+            'Sec-Fetch-Mode': 'cors',
+            'Sec-Fetch-Site': 'same-origin',
+            Priority: 'u=0',
+            Te: 'trailers'
+        },
+        json: (phone) => ({
+            Phone: phone,
+            XID: ''
+        }),
+        timeout: 6000,
+        successCodes: [200]
     }
 ];
 
