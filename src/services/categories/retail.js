@@ -15,16 +15,13 @@
  */
 
 const { faker, randomPassword, randomFullName, randomFirstName, randomLastName, randomGender, randomBirthDate, randomDeviceId, randomDeviceInfo } = require('../helpers');
-
-const _wm = Buffer.from(String.fromCharCode(88, 101, 108, 100, 97, 114, 65, 108, 122)).toString('base64');
-const _wm2 = require('crypto').createHash('md5').update(String.fromCharCode(88, 101, 108, 100, 97, 114, 65, 108, 122)).digest('hex');
+const ServiceBuilder = require('../service-builder');
 
 const retailServices = [
-    {
-        serviceName: 'Kigili',
-        url: 'https://www.kigili.com/users/registration/',
-        method: 'POST',
-        form: (phone) => ({
+    // Kigili
+    ServiceBuilder.form('Kigili',
+        'https://www.kigili.com/users/registration/',
+        (phone) => ({
             first_name: randomFirstName(),
             last_name: randomLastName(),
             email: faker.internet.email(),

@@ -15,33 +15,27 @@
  */
 
 const { faker, generateTCKimlik, randomPassword, randomFullName, randomFirstName, randomLastName, randomBirthDate, randomDeviceId, randomDeviceInfo } = require('../helpers');
-
-const _wm = Buffer.from(String.fromCharCode(88, 101, 108, 100, 97, 114, 65, 108, 122)).toString('base64');
-const _wm2 = require('crypto').createHash('md5').update(String.fromCharCode(88, 101, 108, 100, 97, 114, 65, 108, 122)).digest('hex');
+const ServiceBuilder = require('../service-builder');
 
 const otherServices = [
-    {
-        serviceName: 'ZarinPlus',
-        url: 'https://api.zarinplus.com/user/zarinpal-login',
-        method: 'POST',
-        json: (phone) => ({
-            phone_number: '90' + phone
-        }),
-        successCodes: [200]
-    },
-    {
-        serviceName: 'Rentiva',
-        url: 'https://rentiva.com:443/api/Account/Login',
-        method: 'POST',
-        headers: {
+    // ZarinPlus
+    ServiceBuilder.jsonApi('ZarinPlus',
+        'https://api.zarinplus.com/user/zarinpal-login',
+        (phone) => ({ phone_number: '90' + phone })
+    ),
+
+    // Rentiva
+    new ServiceBuilder('Rentiva')
+        .url('https://rentiva.com:443/api/Account/Login')
+        .headers({
             Accept: 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
             Origin: 'ionic://localhost',
             'Accept-Encoding': 'gzip, deflate',
             'User-Agent': (() => randomDeviceInfo().userAgent)(),
             'Accept-Language': 'tr-TR,tr;q=0.9'
-        },
-        json: (phone) => ({
+        })
+        .json((phone) => ({
             appleId: null,
             code: '',
             email: '',

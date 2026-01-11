@@ -14,45 +14,31 @@
  * is a violation of the license and may result in legal action.
  */
 
-const { faker, randomPassword, randomFullName, randomFirstName, randomLastName, randomGenderTR, randomBirthDate, randomDeviceId, randomCarPlate, randomDeviceInfo } = require('../helpers');
-
-const _wm = Buffer.from(String.fromCharCode(88, 101, 108, 100, 97, 114, 65, 108, 122)).toString('base64');
-const _wm2 = require('crypto').createHash('md5').update(String.fromCharCode(88, 101, 108, 100, 97, 114, 65, 108, 122)).digest('hex');
+const { faker, randomPassword, randomFullName, randomFirstName, randomLastName, randomGenderTR, randomBirthDate, randomDeviceId, randomDeviceInfo } = require('../helpers');
+const ServiceBuilder = require('../service-builder');
 
 const foodServices = [
-    {
-        serviceName: 'KahveDünyası',
-        url: 'https://api.kahvedunyasi.com:443/api/v1/auth/account/register/phone-number',
-        method: 'POST',
-        headers: {
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:135.0) Gecko/20100101 Firefox/135.0',
-            Accept: 'application/json, text/plain, */*',
-            'Accept-Encoding': 'gzip, deflate, br',
-            'Content-Type': 'application/json',
-            'X-Language-Id': 'tr-TR',
-            'X-Client-Platform': 'web',
-            Origin: 'https://www.kahvedunyasi.com',
-            Dnt: '1',
-            'Sec-Gpc': '1',
-            Referer: 'https://www.kahvedunyasi.com/',
-            'Sec-Fetch-Dest': 'empty',
-            'Sec-Fetch-Mode': 'cors',
-            'Sec-Fetch-Site': 'same-site',
-            Priority: 'u=0',
-            Te: 'trailers',
-            Connection: 'keep-alive'
-        },
-        json: (phone) => ({
+    // KahveDünyası
+    ServiceBuilder.web('KahveDünyası', 
+        'https://api.kahvedunyasi.com:443/api/v1/auth/account/register/phone-number',
+        'https://www.kahvedunyasi.com',
+        (phone) => ({
             countryCode: '90',
             phoneNumber: phone
         }),
-        successCodes: [200]
-    },
-    {
-        serviceName: 'TiklaGelsin',
-        url: 'https://svc.apps.tiklagelsin.com:443/user/graphql',
-        method: 'POST',
-        headers: {
+        {
+            headers: {
+                'X-Language-Id': 'tr-TR',
+                'X-Client-Platform': 'web',
+                'Sec-Fetch-Site': 'same-site'
+            }
+        }
+    ),
+
+    // TiklaGelsin
+    new ServiceBuilder('TiklaGelsin')
+        .url('https://svc.apps.tiklagelsin.com:443/user/graphql')
+        .headers({
             'Content-Type': 'application/json',
             'X-Merchant-Type': '0',
             Accept: '*/*',

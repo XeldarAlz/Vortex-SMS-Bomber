@@ -15,16 +15,13 @@
  */
 
 const { faker, generateTCKimlik, randomPassword, randomFullName, randomFirstName, randomLastName, randomBirthDate, randomCarPlate, randomDeviceId, randomDeviceInfo } = require('../helpers');
-
-const _wm = Buffer.from(String.fromCharCode(88, 101, 108, 100, 97, 114, 65, 108, 122)).toString('base64');
-const _wm2 = require('crypto').createHash('md5').update(String.fromCharCode(88, 101, 108, 100, 97, 114, 65, 108, 122)).digest('hex');
+const ServiceBuilder = require('../service-builder');
 
 const utilityServices = [
-    {
-        serviceName: 'Ipragaz',
-        url: 'https://ipapp.ipragaz.com.tr:443/ipragazmobile/v2/ipragaz-b2c/ipragaz-customer/mobile-register-otp',
-        method: 'POST',
-        headers: {
+    // Ipragaz
+    new ServiceBuilder('Ipragaz')
+        .url('https://ipapp.ipragaz.com.tr:443/ipragazmobile/v2/ipragaz-b2c/ipragaz-customer/mobile-register-otp')
+        .headers({
             'Content-Type': 'application/json',
             'X-Api-Token': '',
             Authorization: '',

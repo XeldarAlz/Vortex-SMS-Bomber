@@ -15,92 +15,85 @@
  */
 
 const { randomFirstName, randomLastName, randomDeviceId, randomDeviceInfo } = require('../helpers');
-
-const _wm = Buffer.from(String.fromCharCode(88, 101, 108, 100, 97, 114, 65, 108, 122)).toString('base64');
-const _wm2 = require('crypto').createHash('md5').update(String.fromCharCode(88, 101, 108, 100, 97, 114, 65, 108, 122)).digest('hex');
+const ServiceBuilder = require('../service-builder');
 
 const transportServices = [
-    {
-        serviceName: 'CoreGap',
-        url: (phone) => `https://core.gap.im/v1/user/add.json?mobile=90${phone}`,
-        method: 'POST',
-        successCodes: [200]
-    },
-    {
-        serviceName: 'Tazi',
-        url: 'https://mobileapiv2.tazi.tech:443/C08467681C6844CFA6DA240D51C8AA8C/uyev2/smslogin',
-        method: 'POST',
-        headers: {
+    // CoreGap
+    new ServiceBuilder('CoreGap')
+        .url((phone) => `https://core.gap.im/v1/user/add.json?mobile=90${phone}`)
+        .build(),
+
+    // Tazi
+    new ServiceBuilder('Tazi')
+        .url('https://mobileapiv2.tazi.tech:443/C08467681C6844CFA6DA240D51C8AA8C/uyev2/smslogin')
+        .headers({
             Accept: 'application/json, text/plain, */*',
             'Content-Type': 'application/json;charset=utf-8',
             'Accept-Encoding': 'gzip, deflate',
             'User-Agent': 'Taz%C4%B1/3 CFNetwork/1335.0.3 Darwin/21.6.0',
             'Accept-Language': 'tr-TR,tr;q=0.9',
             Authorization: 'Basic dGF6aV91c3Jfc3NsOjM5NTA3RjI4Qzk2MjRDQ0I4QjVBQTg2RUQxOUE4MDFD'
-        },
-        json: (phone) => ({
+        })
+        .json((phone) => ({
             cep_tel: phone,
             cep_tel_ulkekod: '90'
-        }),
-        timeout: 6000,
-        successCodes: [200, 201, 202, 204, 205]
-    },
-    {
-        serviceName: 'Taksim',
-        url: 'https://service.taksim.digital/services/PassengerRegister/Register',
-        method: 'POST',
-        headers: {
+        }))
+        .timeout(6000)
+        .successCodes([200, 201, 202, 204, 205])
+        .build(),
+
+    // Taksim
+    new ServiceBuilder('Taksim')
+        .url('https://service.taksim.digital/services/PassengerRegister/Register')
+        .headers({
             Accept: '*/*',
             'Content-Type': 'application/json; charset=utf-8',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'tr-TR,tr;q=0.9',
             'User-Agent': 'TaksimProd/1 CFNetwork/1335.0.3.4 Darwin/21.6.0',
             Token: 'gcAvCfYEp7d//rR5A5vqaFB/Ccej7O+Qz4PRs8LwT4E='
-        },
-        json: (phone) => ({
+        })
+        .json((phone) => ({
             countryPhoneCode: '+90',
             name: randomFirstName(),
             phoneNo: phone,
             surname: randomLastName()
-        }),
-        timeout: 6000,
-        successCodes: [200]
-    },
-    {
-        serviceName: 'Porty',
-        url: 'https://panel.porty.tech:443/api.php?',
-        method: 'POST',
-        headers: {
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Porty
+    new ServiceBuilder('Porty')
+        .url('https://panel.porty.tech:443/api.php?')
+        .headers({
             Accept: '*/*',
             'Content-Type': 'application/json; charset=UTF-8',
             'Accept-Encoding': 'gzip, deflate',
             'Accept-Language': 'en-US,en;q=0.9',
             'User-Agent': 'Porty/1 CFNetwork/1335.0.3.4 Darwin/21.6.0',
             Token: 'q2zS6kX7WYFRwVYArDdM66x72dR6hnZASZ'
-        },
-        json: (phone) => ({
+        })
+        .json((phone) => ({
             job: 'start_login',
             phone: phone
-        }),
-        timeout: 6000,
-        successCodes: [200]
-    },
-    {
-        serviceName: 'Marti',
-        url: 'https://customer.martiscooter.com:443/v13/scooter/dispatch/customer/signin',
-        method: 'POST',
-        json: (phone) => ({
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Marti
+    ServiceBuilder.jsonApi('Marti',
+        'https://customer.martiscooter.com:443/v13/scooter/dispatch/customer/signin',
+        (phone) => ({
             mobilePhone: phone,
             mobilePhoneCountryCode: '90',
             oneSignalId: ''
-        }),
-        successCodes: [200]
-    },
-    {
-        serviceName: 'Bisu',
-        url: 'https://www.bisu.com.tr:443/api/v2/app/authentication/phone/register',
-        method: 'POST',
-        headers: {
+        })
+    ),
+
+    // Bisu
+    new ServiceBuilder('Bisu')
+        .url('https://www.bisu.com.tr:443/api/v2/app/authentication/phone/register')
+        .headers({
             'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
             'X-Device-Platform': 'IOS',
             'X-Build-Version-Name': '9.4.0',
