@@ -112,17 +112,14 @@ const transportServices = [
             })(),
             'X-Device-Model': (() => randomDeviceInfo()['X-Device-Model'])(),
             'X-Build-Type': 'Release'
-        },
-        form: (phone) => ({
-            phoneNumber: phone
-        }),
-        successCodes: [200]
-    },
-    {
-        serviceName: 'Orwi',
-        url: 'https://gandalf.orwi.app:443/api/user/requestOtp',
-        method: 'POST',
-        headers: {
+        })
+        .form((phone) => ({ phoneNumber: phone }))
+        .build(),
+
+    // Orwi
+    new ServiceBuilder('Orwi')
+        .url('https://gandalf.orwi.app:443/api/user/requestOtp')
+        .headers({
             'Content-Type': 'application/json',
             Accept: 'application/json',
             'Accept-Encoding': 'gzip, deflate, br',
@@ -132,24 +129,22 @@ const transportServices = [
             Origin: 'capacitor://localhost',
             Region: 'EN',
             'User-Agent': (() => randomDeviceInfo().userAgent)()
-        },
-        json: (phone) => ({
+        })
+        .json((phone) => ({
             gsm: '+90' + phone,
             source: 'orwi'
-        }),
-        timeout: 6000,
-        successCodes: [200]
-    },
-    {
-        serviceName: 'Tasimacim',
-        url: 'https://server.tasimacim.com/requestcode',
-        method: 'POST',
-        json: (phone) => ({
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Tasimacim
+    ServiceBuilder.jsonApi('Tasimacim',
+        'https://server.tasimacim.com/requestcode',
+        (phone) => ({
             phone: phone,
             lang: 'tr'
-        }),
-        successCodes: [200]
-    }
+        })
+    )
 ];
 
 module.exports = transportServices;
