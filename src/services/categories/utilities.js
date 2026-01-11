@@ -40,8 +40,8 @@ const utilityServices = [
             'Os-Version': (() => randomDeviceInfo()['Os-Version'])(),
             Udid: randomDeviceId(),
             Connection: 'close'
-        },
-        json: (phone) => ({
+        })
+        .json((phone) => ({
             birthDate: randomBirthDate('us'),
             carPlate: randomCarPlate(),
             mobileOtp: 'f32c79e65cc684a14b15dcb9dc7e9e9d92b2f6d269fd9000a7b75e02cfd8fa63',
@@ -49,28 +49,26 @@ const utilityServices = [
             otp: '',
             phoneNumber: phone,
             playerId: ''
-        }),
-        successCodes: [200]
-    },
-    {
-        serviceName: 'BodrumBelediyesi',
-        url: 'https://gandalf.orwi.app:443/api/user/requestOtp',
-        method: 'POST',
-        headers: {
+        }))
+        .build(),
+
+    // BodrumBelediyesi
+    new ServiceBuilder('BodrumBelediyesi')
+        .url('https://gandalf.orwi.app:443/api/user/requestOtp')
+        .headers({
             Apikey: 'Ym9kdW0tYmVsLTMyNDgyxLFmajMyNDk4dDNnNGg5xLE4NDNoZ3bEsXV1OiE'
-        },
-        json: (phone) => ({
+        })
+        .json((phone) => ({
             gsm: '+90' + phone,
             source: 'orwi'
-        }),
-        timeout: 6000,
-        successCodes: [200]
-    },
-    {
-        serviceName: 'Hayatsu',
-        url: 'https://api.hayatsu.com.tr:443/api/SignUp/SendOtp',
-        method: 'POST',
-        headers: {
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Hayatsu
+    new ServiceBuilder('Hayatsu')
+        .url('https://api.hayatsu.com.tr:443/api/SignUp/SendOtp')
+        .headers({
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:121.0) Gecko/20100101 Firefox/121.0',
             Accept: 'application/json, text/javascript, */*; q=0.01',
             'Accept-Language': 'en-US,en;q=0.5',
@@ -85,135 +83,126 @@ const utilityServices = [
             'Sec-Fetch-Mode': 'cors',
             'Sec-Fetch-Site': 'same-site',
             Te: 'trailers'
-        },
-        form: (phone) => ({
+        })
+        .form((phone) => ({
             mobilePhoneNumber: phone,
             actionType: 'register'
-        }),
-        timeout: 6000,
-        successCodes: [200]
-    },
-    {
-        serviceName: 'Hizliecza',
-        url: 'https://prod.hizliecza.net:443/mobil/account/sendOTP',
-        method: 'POST',
-        headers: {
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Hizliecza
+    new ServiceBuilder('Hizliecza')
+        .url('https://prod.hizliecza.net:443/mobil/account/sendOTP')
+        .headers({
             Accept: 'application/json',
             'Content-Type': 'application/json',
             'Accept-Encoding': 'gzip, deflate, br',
             'User-Agent': 'hizliecza/31 CFNetwork/1335.0.3.4 Darwin/21.6.0',
             'Accept-Language': 'en-GB,en;q=0.9',
             Authorization: 'Bearer null'
-        },
-        json: (phone) => ({
+        })
+        .json((phone) => ({
             otpOperationType: 1,
             phoneNumber: '+90' + phone
-        }),
-        successCodes: [200]
-    },
-    {
-        serviceName: 'Hamidiye',
-        url: 'https://bayi.hamidiye.istanbul:3400/hamidiyeMobile/send-otp',
-        method: 'POST',
-        headers: {
+        }))
+        .build(),
+
+    // Hamidiye
+    new ServiceBuilder('Hamidiye')
+        .url('https://bayi.hamidiye.istanbul:3400/hamidiyeMobile/send-otp')
+        .headers({
             Accept: 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
             Origin: 'com.hamidiyeapp',
             'User-Agent': 'hamidiyeapp/4 CFNetwork/1335.0.3.4 Darwin/21.6.0',
             'Accept-Language': 'en-GB,en;q=0.9',
             'Accept-Encoding': 'gzip, deflate, br'
-        },
-        json: (phone) => ({
+        })
+        .json((phone) => ({
             isGuest: false,
             phone: phone
-        }),
-        timeout: 6000,
-        successCodes: [200]
-    },
-    {
-        serviceName: 'FatihBelediyesi',
-        url: 'https://ebelediye.fatih.bel.tr:443/Sicil/KisiUyelikKaydet',
-        method: 'POST',
-        headers: {
+        }))
+        .timeout(6000)
+        .build(),
+
+    // FatihBelediyesi
+    new ServiceBuilder('FatihBelediyesi')
+        .url('https://ebelediye.fatih.bel.tr:443/Sicil/KisiUyelikKaydet')
+        .headers({
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:135.0) Gecko/20100101 Firefox/135.0',
             Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'Accept-Encoding': 'gzip, deflate, br',
             'Content-Type': 'multipart/form-data; boundary=----geckoformboundaryc5b24584149b44839fea163e885475be',
             Origin: 'null'
-        },
-        data: (phone) => {
+        })
+        .data((phone) => {
             const tc = generateTCKimlik();
             const firstName = randomFirstName().toUpperCase();
             const lastName = randomLastName().toUpperCase();
             const dob = randomBirthDate('tr');
             const password = randomPassword();
             return `------geckoformboundaryc5b24584149b44839fea163e885475be\r\nContent-Disposition: form-data; name="__RequestVerificationToken"\r\n\r\nGKrki1TGUGJ0CBwKd4n5iRulER91aTo-44_PJdfM4_nxAK7aL1f0Ho9UuqG5lya_8RVBGD-j-tNjE93pZnW8RlRyrAEi6ry6uy8SEC20OPY1\r\n------geckoformboundaryc5b24584149b44839fea163e885475be\r\nContent-Disposition: form-data; name="SahisUyelik.TCKimlikNo"\r\n\r\n${tc}\r\n------geckoformboundaryc5b24584149b44839fea163e885475be\r\nContent-Disposition: form-data; name="SahisUyelik.DogumTarihi"\r\n\r\n${dob}\r\n------geckoformboundaryc5b24584149b44839fea163e885475be\r\nContent-Disposition: form-data; name="SahisUyelik.Ad"\r\n\r\n${firstName}\r\n------geckoformboundaryc5b24584149b44839fea163e885475be\r\nContent-Disposition: form-data; name="SahisUyelik.Soyad"\r\n\r\n${lastName}\r\n------geckoformboundaryc5b24584149b44839fea163e885475be\r\nContent-Disposition: form-data; name="SahisUyelik.CepTelefonu"\r\n\r\n${phone}\r\n------geckoformboundaryc5b24584149b44839fea163e885475be\r\nContent-Disposition: form-data; name="SahisUyelik.EPosta"\r\n\r\n${faker.internet.email()}\r\n------geckoformboundaryc5b24584149b44839fea163e885475be\r\nContent-Disposition: form-data; name="SahisUyelik.Sifre"\r\n\r\n${password}\r\n------geckoformboundaryc5b24584149b44839fea163e885475be\r\nContent-Disposition: form-data; name="SahisUyelik.SifreyiDogrula"\r\n\r\n${password}\r\n------geckoformboundaryc5b24584149b44839fea163e885475be\r\nContent-Disposition: form-data; name="recaptchaValid"\r\n\r\ntrue\r\n------geckoformboundaryc5b24584149b44839fea163e885475be--\r\n`;
-        },
-        timeout: 6000,
-        successCodes: [200]
-    },
-    {
-        serviceName: 'SancaktepeBelediyesi',
-        url: 'https://e-belediye.sancaktepe.bel.tr:443/Sicil/KisiUyelikKaydet',
-        method: 'POST',
-        headers: {
+        })
+        .timeout(6000)
+        .build(),
+
+    // SancaktepeBelediyesi
+    new ServiceBuilder('SancaktepeBelediyesi')
+        .url('https://e-belediye.sancaktepe.bel.tr:443/Sicil/KisiUyelikKaydet')
+        .headers({
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:135.0) Gecko/20100101 Firefox/135.0',
             Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'Accept-Encoding': 'gzip, deflate, br',
             'Content-Type': 'multipart/form-data; boundary=----geckoformboundary35479e29ca6a61a4a039e2d3ca87f112',
             Origin: 'null'
-        },
-        data: (phone) => {
+        })
+        .data((phone) => {
             const tc = generateTCKimlik();
             const firstName = randomFirstName().toUpperCase();
             const lastName = randomLastName().toUpperCase();
             const dob = randomBirthDate('tr');
             const password = randomPassword();
             return `------geckoformboundary35479e29ca6a61a4a039e2d3ca87f112\r\nContent-Disposition: form-data; name="__RequestVerificationToken"\r\n\r\n21z_svqlZXLTEPZGuSugh8winOg_nSRis6rOL-96TmwGUHExtulBBRN9F2XBS_LvU28OyUsfMVdZQmeJlejCYZ1slOmqI63OX_FsQhCxwGk1\r\n------geckoformboundary35479e29ca6a61a4a039e2d3ca87f112\r\nContent-Disposition: form-data; name="SahisUyelik.TCKimlikNo"\r\n\r\n${tc}\r\n------geckoformboundary35479e29ca6a61a4a039e2d3ca87f112\r\nContent-Disposition: form-data; name="SahisUyelik.DogumTarihi"\r\n\r\n${dob}\r\n------geckoformboundary35479e29ca6a61a4a039e2d3ca87f112\r\nContent-Disposition: form-data; name="SahisUyelik.Ad"\r\n\r\n${firstName}\r\n------geckoformboundary35479e29ca6a61a4a039e2d3ca87f112\r\nContent-Disposition: form-data; name="SahisUyelik.Soyad"\r\n\r\n${lastName}\r\n------geckoformboundary35479e29ca6a61a4a039e2d3ca87f112\r\nContent-Disposition: form-data; name="SahisUyelik.CepTelefonu"\r\n\r\n${phone}\r\n------geckoformboundary35479e29ca6a61a4a039e2d3ca87f112\r\nContent-Disposition: form-data; name="SahisUyelik.EPosta"\r\n\r\n${faker.internet.email()}\r\n------geckoformboundary35479e29ca6a61a4a039e2d3ca87f112\r\nContent-Disposition: form-data; name="SahisUyelik.Sifre"\r\n\r\n${password}\r\n------geckoformboundary35479e29ca6a61a4a039e2d3ca87f112\r\nContent-Disposition: form-data; name="SahisUyelik.SifreyiDogrula"\r\n\r\n${password}\r\n------geckoformboundary35479e29ca6a61a4a039e2d3ca87f112\r\nContent-Disposition: form-data; name="recaptchaValid"\r\n\r\ntrue\r\n------geckoformboundary35479e29ca6a61a4a039e2d3ca87f112--\r\n`;
-        },
-        timeout: 6000,
-        successCodes: [200]
-    },
-    {
-        serviceName: 'BayramPasaBelediyesi',
-        url: 'https://ebelediye.bayrampasa.bel.tr:443/Sicil/KisiUyelikKaydet',
-        method: 'POST',
-        headers: {
+        })
+        .timeout(6000)
+        .build(),
+
+    // BayramPasaBelediyesi
+    new ServiceBuilder('BayramPasaBelediyesi')
+        .url('https://ebelediye.bayrampasa.bel.tr:443/Sicil/KisiUyelikKaydet')
+        .headers({
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:135.0) Gecko/20100101 Firefox/135.0',
             Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'Accept-Encoding': 'gzip, deflate, br',
             'Content-Type': 'multipart/form-data; boundary=----geckoformboundary8971e2968f245b21f5fd8c5e80bdfb8b',
             Origin: 'null'
-        },
-        data: (phone) => {
+        })
+        .data((phone) => {
             const tc = generateTCKimlik();
             const firstName = randomFirstName().toUpperCase();
             const lastName = randomLastName().toUpperCase();
             const dob = randomBirthDate('tr');
             const password = randomPassword();
             return `------geckoformboundary8971e2968f245b21f5fd8c5e80bdfb8b\r\nContent-Disposition: form-data; name="__RequestVerificationToken"\r\n\r\nzOIiDXRlsw-KfS3JGnn-Vxdl5UP-ZNzjaA207_Az-5FfpsusGnNUxonzDkvoZ55Cszn3beOwk80WczRsSfazSZVxqMU0mMkO70gOe8BlbSg1\r\n------geckoformboundary8971e2968f245b21f5fd8c5e80bdfb8b\r\nContent-Disposition: form-data; name="SahisUyelik.TCKimlikNo"\r\n\r\n${tc}\r\n------geckoformboundary8971e2968f245b21f5fd8c5e80bdfb8b\r\nContent-Disposition: form-data; name="SahisUyelik.DogumTarihi"\r\n\r\n${dob}\r\n------geckoformboundary8971e2968f245b21f5fd8c5e80bdfb8b\r\nContent-Disposition: form-data; name="SahisUyelik.Ad"\r\n\r\n${firstName}\r\n------geckoformboundary8971e2968f245b21f5fd8c5e80bdfb8b\r\nContent-Disposition: form-data; name="SahisUyelik.Soyad"\r\n\r\n${lastName}\r\n------geckoformboundary8971e2968f245b21f5fd8c5e80bdfb8b\r\nContent-Disposition: form-data; name="SahisUyelik.CepTelefonu"\r\n\r\n${phone}\r\n------geckoformboundary8971e2968f245b21f5fd8c5e80bdfb8b\r\nContent-Disposition: form-data; name="SahisUyelik.EPosta"\r\n\r\n${faker.internet.email()}\r\n------geckoformboundary8971e2968f245b21f5fd8c5e80bdfb8b\r\nContent-Disposition: form-data; name="SahisUyelik.Sifre"\r\n\r\n${password}\r\n------geckoformboundary8971e2968f245b21f5fd8c5e80bdfb8b\r\nContent-Disposition: form-data; name="SahisUyelik.SifreyiDogrula"\r\n\r\n${password}\r\n------geckoformboundary8971e2968f245b21f5fd8c5e80bdfb8b\r\nContent-Disposition: form-data; name="recaptchaValid"\r\n\r\ntrue\r\n------geckoformboundary8971e2968f245b21f5fd8c5e80bdfb8b--\r\n`;
-        },
-        timeout: 6000,
-        successCodes: [200]
-    },
-    {
-        serviceName: 'Tasdelen',
-        url: 'https://tasdelen.sufirmam.com:3300/mobile/send-otp',
-        method: 'POST',
-        headers: {
+        })
+        .timeout(6000)
+        .build(),
+
+    // Tasdelen
+    new ServiceBuilder('Tasdelen')
+        .url('https://tasdelen.sufirmam.com:3300/mobile/send-otp')
+        .headers({
             Accept: '*/*',
             'Content-Type': 'application/json',
             'Accept-Encoding': 'gzip, deflate, br',
             'User-Agent': 'Tasdelen/5.9 (com.tasdelenapp; build:1; iOS 15.8.3) Alamofire/5.4.3',
             'Accept-Language': 'en-BA;q=1.0, tr-BA;q=0.9, bs-BA;q=0.8',
             Connection: 'keep-alive'
-        },
-        json: (phone) => ({
-            phone: phone
-        }),
-        timeout: 6000,
-        successCodes: [200]
-    }
+        })
+        .json((phone) => ({ phone: phone }))
+        .timeout(6000)
+        .build()
 ];
 
 module.exports = utilityServices;
