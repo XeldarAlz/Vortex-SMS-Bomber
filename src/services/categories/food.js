@@ -48,8 +48,8 @@ const foodServices = [
             'X-No-Auth': 'true',
             'User-Agent': 'TiklaGelsin/809 CFNetwork/1335.0.3.2 Darwin/21.6.0',
             'X-Device-Type': '2'
-        },
-        json: (phone) => ({
+        })
+        .json((phone) => ({
             operationName: 'GENERATE_OTP',
             query: 'mutation GENERATE_OTP($phone: String, $challenge: String, $deviceUniqueId: String) {\n  generateOtp(phone: $phone, challenge: $challenge, deviceUniqueId: $deviceUniqueId)\n}\n',
             variables: {
@@ -57,23 +57,19 @@ const foodServices = [
                 deviceUniqueId: randomDeviceId(),
                 phone: '+90' + phone
             }
-        }),
-        successCodes: [200]
-    },
-    {
-        serviceName: 'Sakasu',
-        url: 'https://www.sakasu.com.tr:443/app/api_register/step1',
-        method: 'POST',
-        form: (phone) => ({
-            phone: '0' + phone
-        }),
-        successCodes: [200]
-    },
-    {
-        serviceName: 'Happy',
-        url: 'https://www.happy.com.tr:443/index.php?route=account/register/verifyPhone',
-        method: 'POST',
-        headers: {
+        }))
+        .build(),
+
+    // Sakasu
+    ServiceBuilder.form('Sakasu',
+        'https://www.sakasu.com.tr:443/app/api_register/step1',
+        (phone) => ({ phone: '0' + phone })
+    ),
+
+    // Happy
+    new ServiceBuilder('Happy')
+        .url('https://www.happy.com.tr:443/index.php?route=account/register/verifyPhone')
+        .headers({
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
             Accept: 'application/json, text/javascript, */*; q=0.01',
             'X-Requested-With': 'XMLHttpRequest',
@@ -89,18 +85,15 @@ const foodServices = [
             'Sec-Fetch-Site': 'same-origin',
             Priority: 'u=0',
             Te: 'trailers'
-        },
-        json: (phone) => ({
-            telephone: phone
-        }),
-        timeout: 6000,
-        successCodes: [200]
-    },
-    {
-        serviceName: 'Komagene',
-        url: 'https://gateway.komagene.com.tr:443/auth/auth/smskodugonder',
-        method: 'POST',
-        headers: {
+        })
+        .json((phone) => ({ telephone: phone }))
+        .timeout(6000)
+        .build(),
+
+    // Komagene
+    new ServiceBuilder('Komagene')
+        .url('https://gateway.komagene.com.tr:443/auth/auth/smskodugonder')
+        .headers({
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:135.0) Gecko/20100101 Firefox/135.0',
             Accept: '*/*',
             'Accept-Encoding': 'gzip, deflate, br',
@@ -118,36 +111,30 @@ const foodServices = [
             Priority: 'u=0',
             Te: 'trailers',
             Connection: 'keep-alive'
-        },
-        json: (phone) => ({
+        })
+        .json((phone) => ({
             FirmaId: 32,
             Telefon: phone
-        }),
-        timeout: 6000,
-        successCodes: [200]
-    },
-    {
-        serviceName: 'KuryemGelsin',
-        url: 'https://api.kuryemgelsin.com:443/tr/api/users/registerMessage/',
-        method: 'POST',
-        json: (phone) => ({
+        }))
+        .timeout(6000)
+        .build(),
+
+    // KuryemGelsin
+    ServiceBuilder.jsonApi('KuryemGelsin',
+        'https://api.kuryemgelsin.com:443/tr/api/users/registerMessage/',
+        (phone) => ({
             phoneNumber: phone,
             phone_country_code: '+90'
         }),
-        timeout: 6000,
-        successCodes: [200]
-    },
-    {
-        serviceName: 'Starbucks',
-        url: 'https://auth.sbuxtr.com:443/signUp',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Operationchannel: 'ios',
-            Accept: '*/*',
-            'Accept-Encoding': 'gzip, deflate, br'
-        },
-        json: (phone) => {
+        { timeout: 6000 }
+    ),
+
+    // Starbucks
+    ServiceBuilder.ios('Starbucks',
+        'https://auth.sbuxtr.com:443/signUp',
+        'Starbucks',
+        '1.0',
+        (phone) => {
             const firstName = randomFirstName();
             return {
                 allowEmail: true,
@@ -161,22 +148,26 @@ const foodServices = [
                 preferredName: firstName
             };
         },
-        timeout: 6000,
-        successCodes: [200]
-    },
-    {
-        serviceName: 'BayDöner',
-        url: 'https://crmmobil.baydoner.com:7004/Api/Customers/AddCustomerTemp',
-        method: 'POST',
-        headers: {
+        {
+            timeout: 6000,
+            additionalHeaders: {
+                Operationchannel: 'ios'
+            }
+        }
+    ),
+
+    // BayDöner
+    new ServiceBuilder('BayDöner')
+        .url('https://crmmobil.baydoner.com:7004/Api/Customers/AddCustomerTemp')
+        .headers({
             'Content-Type': 'application/json',
             Accept: '*/*',
             'Accept-Language': 'tr-TR,tr;q=0.9',
             Platform: '1',
             'Accept-Encoding': 'gzip, deflate, br',
             'User-Agent': 'BaydonerCossla/163 CFNetwork/1335.0.3.4 Darwin/21.6.0'
-        },
-        json: (phone) => {
+        })
+        .json((phone) => {
             const firstName = randomFirstName();
             const lastName = randomLastName();
             const deviceId = randomDeviceId();
@@ -212,15 +203,14 @@ const foodServices = [
                 TempId: Math.floor(Math.random() * 900000) + 100000,
                 TermsAndConditions: false
             };
-        },
-        timeout: 6000,
-        successCodes: [200]
-    },
-    {
-        serviceName: 'Pidem',
-        url: 'https://restashop.azurewebsites.net:443/graphql/',
-        method: 'POST',
-        headers: {
+        })
+        .timeout(6000)
+        .build(),
+
+    // Pidem
+    new ServiceBuilder('Pidem')
+        .url('https://restashop.azurewebsites.net:443/graphql/')
+        .headers({
             Accept: '*/*',
             Origin: 'https://pidem.azurewebsites.net',
             'Content-Type': 'application/json',
@@ -229,19 +219,18 @@ const foodServices = [
             'Accept-Language': 'tr-TR,tr;q=0.9',
             'User-Agent': (() => randomDeviceInfo().userAgent)(),
             'Accept-Encoding': 'gzip, deflate, br'
-        },
-        json: (phone) => ({
+        })
+        .json((phone) => ({
             query: '\n  mutation ($phone: String) {\n    sendOtpSms(phone: $phone) {\n      resultStatus\n      message\n    }\n  }\n',
             variables: { phone: phone }
-        }),
-        timeout: 6000,
-        successCodes: [200]
-    },
-    {
-        serviceName: 'Dominos',
-        url: 'https://frontend.dominos.com.tr:443/api/customer/sendOtpCode',
-        method: 'POST',
-        headers: {
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Dominos
+    new ServiceBuilder('Dominos')
+        .url('https://frontend.dominos.com.tr:443/api/customer/sendOtpCode')
+        .headers({
             'Content-Type': 'application/json;charset=utf-8',
             Accept: 'application/json, text/plain, */*',
             Authorization: 'Bearer eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldUIn0.ITty2sZk16QOidAMYg4eRqmlBxdJhBhueRLSGgSvcN3wj4IYX11FBA.N3uXdJFQ8IAFTnxGKOotRA.7yf_jrCVfl-MDGJjxjo3M8SxVkatvrPnTBsXC5SBe30x8edSBpn1oQ5cQeHnu7p0ccgUBbfcKlYGVgeOU3sLDxj1yVLE_e2bKGyCGKoIv-1VWKRhOOpT_2NJ-BtqJVVoVnoQsN95B6OLTtJBlqYAFvnq6NiQCpZ4o1OGNhep1TNSHnlUU6CdIIKWwaHIkHl8AL1scgRHF88xiforpBVSAmVVSAUoIv8PLWmp3OWMLrl5jGln0MPAlST0OP9Q964ocXYRfAvMhEwstDTQB64cVuvVgC1D52h48eihVhqNArU6-LGK6VNriCmofXpoDRPbctYs7V4MQdldENTrmVcMVUQtZJD-5Ev1PmcYr858ClLTA7YdJ1C6okphuDasvDufxmXSeUqA50-nghH4M8ofAi6HJlpK_P0x_upqAJ6nvZG2xjmJt4Pz_J5Kx_tZu6eLoUKzZPU3k2kJ4KsqaKRfT4ATTEH0k15OtOVH7po8lNwUVuEFNnEhpaiibBckipJodTMO8AwC4eZkuhjeffmf9A.QLpMS6EUu7YQPZm1xvjuXg',
@@ -256,20 +245,19 @@ const foodServices = [
             'User-Agent': 'Dominos/7.1.0 CFNetwork/1335.0.3.4 Darwin/21.6.0',
             Servicetype: 'CarryOut',
             Locationcode: 'undefined'
-        },
-        json: (phone) => ({
+        })
+        .json((phone) => ({
             email: faker.internet.email(),
             isSure: false,
             mobilePhone: phone
-        }),
-        timeout: 6000,
-        successCodes: [200]
-    },
-    {
-        serviceName: 'KofteciYusuf',
-        url: 'https://gateway.poskofteciyusuf.com:1283/auth/auth/smskodugonder',
-        method: 'POST',
-        headers: {
+        }))
+        .timeout(6000)
+        .build(),
+
+    // KofteciYusuf
+    new ServiceBuilder('KofteciYusuf')
+        .url('https://gateway.poskofteciyusuf.com:1283/auth/auth/smskodugonder')
+        .headers({
             'Content-Type': 'application/json; charset=utf-8',
             Accept: 'application/json',
             Ostype: 'iOS',
@@ -280,21 +268,20 @@ const foodServices = [
             'Accept-Encoding': 'gzip, deflate, br',
             Language: 'tr-TR',
             'User-Agent': 'YemekPosMobil/53 CFNetwork/1335.0.3.4 Darwin/21.6.0'
-        },
-        json: (phone) => ({
+        })
+        .json((phone) => ({
             FireBaseCihazKey: null,
             FirmaId: 82,
             GuvenlikKodu: null,
             Telefon: phone
-        }),
-        timeout: 6000,
-        successCodes: [200]
-    },
-    {
-        serviceName: 'LittleCaesars',
-        url: 'https://api.littlecaesars.com.tr:443/api/web/Member/Register',
-        method: 'POST',
-        headers: {
+        }))
+        .timeout(6000)
+        .build(),
+
+    // LittleCaesars
+    new ServiceBuilder('LittleCaesars')
+        .url('https://api.littlecaesars.com.tr:443/api/web/Member/Register')
+        .headers({
             Accept: 'application/json, text/plain, */*',
             'Content-Type': 'application/json; charset=utf-8',
             Authorization: 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjM1Zjc4YTFhNjJjNmViODJlNjQ4OTU0M2RmMWQ3MDFhIiwidHlwIjoiSldUIn0.eyJuYmYiOjE3MzkxMTA0NzIsImV4cCI6MTczOTcxNTI3MiwiaXNzIjoiaHR0cHM6Ly9hdXRoLmxpdHRsZWNhZXNhcnMuY29tLnRyIiwiYXVkIjpbImh0dHBzOi8vYXV0aC5saXR0bGVjYWVzYXJzLmNvbS50ci9yZXNvdXJjZXMiLCJsaXR0bGVjYWVzYXJzYXBpIl0sImNsaWVudF9pZCI6IndlYiIsInN1YiI6InJvYnVzZXJAY2xvY2t3b3JrLmNvbS50ciIsImF1dGhfdGltZSI6MTczOTExMDQ3MiwiaWRwIjoibG9jYWwiLCJlbWFpbCI6InJvYnVzZXJAY2xvY2t3b3JrLmNvbS50ciIsInVpZCI6IjI0IiwicGVyc29uaWQiOiIyMDAwNTA4NTU0NjYiLCJuYW1lc3VybmFtZSI6IkxDIER1bW15IiwibGN0b2tlbiI6IlFRcHZHRS1wVDBrZDQ2MjRVQjhUc01SRkxoUUZsUlhGS0toTWYwUlF3U0M4Tnd3M2pzdHd6QzJ3NmNldGRkMkZRdFo1eXpacHVGOE81REhwUWpCSnhKaG5YNVJOcWYyc3NrNHhkTi0zcjZ2T01fdWQzSW5KRDZYUFdSYlM3Tml5d1FHbjByUENxNC1BVE9pd09iR005YnZwUTRISzJhNTFGVTdfQ1R2a2JGUmswMUpwM01YbkJmU3V6OHZ4bTdUTS1Vc1pXZzJDTmVkajlWaXJzdHo2TUs4VXdRTXp6TFZkZHRTQ2lOOENZVWc1cVhBNjVJbEszamVLNnZwQ0EwZTdpem5wa2hKUFVqY1dBc1JLc0tieDB3Y2EycU1EYkl6VlJXdV8xSjF5SDNhWmxSV0w4eFhJYl82NG5jd1p1Yk9MeFpiUFRRZW5GWWxuOGxNY1JFUDFIdTlCOWJyOFd3QVNqMmRDa3g2NVo5S0NPR3FiIiwibGNyZWZyZXNodG9rZW4iOiI2NDUyYWQ4MzIzY2I0N2ZiOWFmMWM2M2EyYWIxMTJkMyIsInBlcnNvbmVtYWlsIjoibGNAZHVtbXkuY29tIiwic2NvcGUiOlsibGl0dGxlY2Flc2Fyc2FwaSIsIm9mZmxpbmVfYWNjZXNzIl0sImFtciI6WyI3NjU2QkFGM0YxNUE2NTA0QkJGM0NFRTgyOTA5MkRGQSJdfQ.SrG2kFdRTVAq0SCt17cmZ-i6Cl9MaQaOUwu1YQ2r27m5_9i5WkVUx_CUPbCNazHcmGt3IYHw9U6TxS-zAz4Jw5o-PbCWktwBiLJNfIsK4akCT4RjX8b7d4YX0yDz4WcIp43ViEsEkDKByHwz75GWdV9gSJtmAerGjZbIoN-OkgJIYAxzCCeGUSdOW2jspvZew9VQKEKVRYzdfZlcvoCV_2mYV122P0jU5i_0J4k_JH-ok7bMxNGqpaxEDSZ1WEuQxBRcXr7C7swcj4AJHHDuksvNrHjXnSjB0VQt5sB3JuwjGDJRuY2yFUlrI8l8W4x01Jm6kSn67G4h8hqyNixpRg',
@@ -303,8 +290,8 @@ const foodServices = [
             'User-Agent': 'LittleCaesars/20 CFNetwork/1335.0.3.4 Darwin/21.6.0',
             'Accept-Language': 'en-GB,en;q=0.9',
             'Accept-Encoding': 'gzip, deflate, br'
-        },
-        json: (phone) => ({
+        })
+        .json((phone) => ({
             CampaignInform: true,
             Email: faker.internet.email(),
             InfoRegister: true,
@@ -313,15 +300,14 @@ const foodServices = [
             Password: randomPassword(),
             Phone: phone,
             SmsInform: true
-        }),
-        timeout: 6000,
-        successCodes: [200]
-    },
-    {
-        serviceName: 'Coffy',
-        url: 'https://user-api-gw.coffy.com.tr:443/user/signup',
-        method: 'POST',
-        headers: {
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Coffy
+    new ServiceBuilder('Coffy')
+        .url('https://user-api-gw.coffy.com.tr:443/user/signup')
+        .headers({
             Accept: 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
             'Accept-Language': 'en-GB,en;q=0.9',
@@ -329,17 +315,16 @@ const foodServices = [
             Language: 'tr',
             'User-Agent': 'coffy/5 CFNetwork/1335.0.3.4 Darwin/21.6.0',
             Token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkIjoiNjdhOGM0MTc0MDY3ZDFmMzBkMDNmMmRlIiwidSI6IjY3YThjNDE3Njc5YTUxM2MyMzljMDc0YSIsInQiOjE3MzkxMTM0OTUyNjgsImlhdCI6MTczOTExMzQ5NX0.IQ_33PJ8s_CKMbJgp2sD1wIfFO852m5VfIxW-dv2-UA'
-        },
-        json: (phone) => ({
+        })
+        .json((phone) => ({
             countryCode: '90',
             gsm: phone,
             isKVKKAgreementApproved: true,
             isUserAgreementApproved: true,
             name: randomFullName()
-        }),
-        timeout: 6000,
-        successCodes: [200]
-    }
+        }))
+        .timeout(6000)
+        .build()
 ];
 
 module.exports = foodServices;
