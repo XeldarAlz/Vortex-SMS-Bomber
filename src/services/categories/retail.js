@@ -66,11 +66,47 @@ const retailServices = [
         })
     ),
 
-    // Migros
+    // Migros (Login endpoint)
     ServiceBuilder.jsonApi('Migros',
         'https://rest.migros.com.tr:443/sanalmarket/users/login/otp',
         (phone) => ({ phoneNumber: phone })
     ),
+
+    // Migros (Registration endpoint)
+    new ServiceBuilder('MigrosRegister')
+        .url('https://rest.migros.com.tr:443/sanalmarket/users/register/otp')
+        .headers({
+            'User-Agent': (() => {
+                const deviceInfo = randomDeviceInfo();
+                return `Migros/1917 CFNetwork/1335.0.3.4 Darwin/21.6.0`;
+            })(),
+            'X-Device-Model': (() => randomDeviceInfo()['X-Device-Model'])(),
+            'X-Device-Type': 'MOBILE',
+            'X-Device-App-Screen': 'OTHER',
+            'X-Device-Language': 'tr-TR',
+            'X-Device-App-Version': '10.6.13',
+            'X-Device-Current-Long': '',
+            'X-Request-Identifier': randomDeviceId(),
+            'X-Device-Selected-Address-Lat': '',
+            'X-Device-Platform-Version': (() => randomDeviceInfo()['X-Device-Platform-Version'])(),
+            'X-Device-Current-Lat': '',
+            'X-Device-Platform': 'IOS',
+            'X-Store-Ids': '',
+            'X-Device-Longitude': '',
+            'Accept-Language': 'tr-TR,tr;q=0.9',
+            Accept: '*/*',
+            'Content-Type': 'application/json',
+            'X-Device-Latitude': '',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'X-Device-Selected-Address-Long': '',
+            'X-Device-Identifier': randomDeviceId()
+        })
+        .json((phone) => ({
+            email: faker.internet.email(),
+            phoneNumber: phone
+        }))
+        .timeout(6000)
+        .build(),
 
     // A101
     ServiceBuilder.jsonApi('A101',
@@ -391,7 +427,103 @@ const retailServices = [
             XID: ''
         }),
         { timeout: 6000 }
-    )
+    ),
+
+    // ICQ
+    new ServiceBuilder('ICQ')
+        .url((phone) => `https://u.icq.net:443/api/v90/smsreg/requestPhoneValidation.php?client=icq&f=json&k=gu19PNBblQjCdbMU&locale=en&msisdn=%2B90${phone}&platform=ios&r=796356153&smsFormatType=human`)
+        .headers({
+            Accept: '*/*',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'User-Agent': 'ICQ iOS #no_user_id# gu19PNBblQjCdbMU 23.1.1(124106) 15.7.7 iPhone9,4',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Accept-Encoding': 'gzip, deflate'
+        })
+        .timeout(6000)
+        .build(),
+
+    // Qumpara
+    new ServiceBuilder('Qumpara')
+        .url('https://tr-api.fisicek.com:443/v1.3/auth/getOTP')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate',
+            'User-Agent': (() => {
+                const deviceInfo = randomDeviceInfo();
+                return `qumpara/4.2.53 (iPhone; iOS ${deviceInfo.version}; Scale/3.00)`;
+            })(),
+            'Accept-Language': 'en-TR;q=1, tr-TR;q=0.9'
+        })
+        .json((phone) => ({
+            msisdn: '+90' + phone
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Paybol
+    new ServiceBuilder('Paybol')
+        .url('https://pyb-mobileapi.walletgate.io:443/v1/Account/RegisterPersonalAccountSendOtpSms')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'User-Agent': (() => {
+                const deviceInfo = randomDeviceInfo();
+                return `Paybol/1.2.1 (com.app.paybol; build:1; iOS ${deviceInfo.version}) Alamofire/5.5.0`;
+            })(),
+            'Accept-Language': 'en-TR;q=1.0, tr-TR;q=0.9',
+            'Accept-Encoding': 'gzip, deflate',
+            Connection: 'close'
+        })
+        .json((phone) => ({
+            phone_number: '90' + phone
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Joker
+    new ServiceBuilder('Joker')
+        .url('https://api.joker.com.tr:443/api/register')
+        .headers({
+            Accept: '*/*',
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2OTA3MTY1MjEsImV4cCI6MTY5NTkwMDUyMSwidXNlcm5hbWUiOiJHVUVTVDE2OTA3MTY1MjEzMzA3MzdAam9rZXIuY29tLnRyIiwiZ3Vlc3QiOnRydWV9.TaQA8ZDtmU09eFqOFATS8ubXM4BHPQL_BcgeEoqZfuNZcfjfL_xzqRO7fZehzWzEdjHXNXeCUTdjx76EyVB-b3TFuL3OahmrbeaOICD8MXchhMDv78TFhWzOJ9Ad-Mma6QPScSSVL0pYoQHWRhzaeOkmVeypqYiQKGmOEk9NzfOVxDYPa25iJmetiab1Z_b95Hqt5Cls52V7g4pGWmbjYB3gyeUQn5II6neKN174txp1yaGdrNPYwAk_aRJzoAMA1SisZm4rhjdE_9MeyGwjbgk2obPxEVcwvPPwkd56_a34aDOeo6rAvngGALBPWlS89nfHFb6PU2fKyK7jTaVlC0DiVnojlkC_KzoHcptM7SjQBym4Bn9CXZ4kj2J1Om-dhDymQynSCfmQ3JZQd7n1YdQYYMuAoTbjghZhyPu2SCtlI7ao6JhUUcmtO3fjIiyYgAdgD-FDcqSGAs9i5fn3kCidSku5M4ljq1ovJM4BeaNeQdFXqE_WqurpOeLA95fNumGCoXvJGlLhS5VzMdFT-l3cfdPt0V0WmtjJDRpTnosjgfizx4F5qftlVuF98uoFoexg7lQYHyZ-j455-d5B24_WfU8GCjQhtlDVtSTcMiRvUKEjJ-Glm5syv5VVbR7mJxu64SB2J2dPbHcIk6BQuFYXIJklN7GXxDa8mSnEZds',
+            'Accept-Encoding': 'gzip, deflate',
+            'User-Agent': (() => {
+                const deviceInfo = randomDeviceInfo();
+                return `Joker/4.0.14 (com.joker.app; build:2; iOS ${deviceInfo.version}) Alamofire/5.4.3`;
+            })(),
+            'Accept-Language': 'en-TR;q=1.0, tr-TR;q=0.9',
+            Connection: 'close'
+        })
+        .json((phone) => ({
+            firstName: randomFirstName(),
+            gender: 'm',
+            iosVersion: '4.0.2',
+            lastName: randomLastName(),
+            os: 'IOS',
+            password: randomPassword(),
+            phoneNumber: '0' + phone,
+            username: faker.internet.email()
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Macrocenter (Alternative endpoint)
+    new ServiceBuilder('MacrocenterAlt')
+        .url('https://www.macrocenter.com.tr:443/rest/users/register/otp?reid=31')
+        .headers(ServiceBuilder.webHeaders('https://www.macrocenter.com.tr', 'https://www.macrocenter.com.tr/kayit'))
+        .addHeaders({
+            'X-Forwarded-Rest': 'true',
+            'X-Pwa': 'true',
+            'X-Device-Pwa': 'true'
+        })
+        .json((phone) => ({
+            email: faker.internet.email(),
+            phoneNumber: phone
+        }))
+        .timeout(6000)
+        .build()
 ];
 
 module.exports = retailServices;
