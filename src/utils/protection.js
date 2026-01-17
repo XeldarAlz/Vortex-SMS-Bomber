@@ -165,7 +165,7 @@ function addWatermarkHeaders(headers = {}) {
     return {
         ...headers,
         'X-Request-ID': _h1.substring(0, 16),
-        'X-Client-Version': '1.2.5',
+        'X-Client-Version': '1.1.0',
         'X-Client-Hash': _h2,
         'X-Platform': _h3
     };

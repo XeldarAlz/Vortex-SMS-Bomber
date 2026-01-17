@@ -34,7 +34,7 @@ const banner = createBanner({
         try {
             return await window.electronAPI.getVersion();
         } catch {
-            return '1.0.0';
+            return '1.1.0';
         }
     }
 });

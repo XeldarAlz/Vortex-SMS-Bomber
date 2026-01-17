@@ -1,6 +1,6 @@
 {
   "name": "vortexsms-desktop",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "VortexSMS Desktop - Advanced SMS Spammer with Console-like GUI",
   "main": "main.js",
   "scripts": {

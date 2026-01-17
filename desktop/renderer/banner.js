@@ -43,7 +43,7 @@ export function createBanner({ palette, getLocale, terminal, getVersion }) {
 
     async function showMainContent() {
         const t = getLocale();
-        const version = getVersion ? await getVersion() : '1.0.0';
+        const version = getVersion ? await getVersion() : '1.1.0';
         await terminal.enqueue(`<div style="text-align: center">${gradientText('⚡ VORTEX SMS BOMBER V' + version + ' ⚡', palette.accent, palette.secondary)}</div>`, 100);
         await terminal.enqueue(`<div style="text-align: center; color: ${palette.info}">⚔️  Developed by XeldarAlz ⚔️</div>`, 50);
         await terminal.enqueue(`<div style="text-align: center; color: ${palette.warning}; opacity: 0.7">🌐 github.com/XeldarAlz 🌐</div>`, 50);

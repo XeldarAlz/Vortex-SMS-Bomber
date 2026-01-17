@@ -1,6 +1,6 @@
 # VortexSMS
 
-[![Versiyon](https://img.shields.io/badge/versiyon-1.0.0-blue.svg)](https://github.com/XeldarAlz/Vortex-SMS-Bomber/releases)
+[![Versiyon](https://img.shields.io/badge/versiyon-1.1.0-blue.svg)](https://github.com/XeldarAlz/Vortex-SMS-Bomber/releases)
 [![Lisans](https://img.shields.io/badge/lisans-AGPL--3.0-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/node.js-%3E%3D12.0-brightgreen.svg)](https://nodejs.org/)
 [![Platform](https://img.shields.io/badge/platform-Windows-blue.svg)]()
