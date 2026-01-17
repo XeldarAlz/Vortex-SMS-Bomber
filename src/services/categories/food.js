@@ -324,6 +324,56 @@ const foodServices = [
             name: randomFullName()
         }))
         .timeout(6000)
+        .build(),
+
+    // Coffy (Alternative endpoint)
+    new ServiceBuilder('CoffyAlt')
+        .url('https://prod-api-mobile.coffy.com.tr:443/Account/Account/SendVerificationCode')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'User-Agent': 'coffy/5 CFNetwork/1335.0.3.4 Darwin/21.6.0'
+        })
+        .json((phone) => ({
+            phonenumber: '+90' + phone
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Pisir
+    new ServiceBuilder('Pisir')
+        .url('https://api.pisir.com:443/v1/login/')
+        .headers({
+            Accept: '*/*',
+            'Content-Type': 'application/json',
+            'User-Agent': 'Pisir/386 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Accept-Encoding': 'gzip, deflate'
+        })
+        .json((phone) => ({
+            msisdn: '90' + phone
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Sushico
+    new ServiceBuilder('Sushico')
+        .url('https://api.sushico.com.tr:443/tr/sendActivation')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'User-Agent': 'Sushico/1 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'tr-TR,tr;q=0.9'
+        })
+        .json((phone) => ({
+            phone: '+90' + phone,
+            location: 1,
+            locale: 'tr'
+        }))
+        .successCodes([200, 201, 202, 204, 205])
+        .timeout(6000)
         .build()
 ];
 
