@@ -144,7 +144,78 @@ const transportServices = [
             phone: phone,
             lang: 'tr'
         })
-    )
+    ),
+
+    // Scooby
+    new ServiceBuilder('Scooby')
+        .url((phone) => `https://sct.scoobyturkiye.com:443/v1/mobile/user/code-request?phonenumber=90${phone}`)
+        .method('GET')
+        .timeout(6000)
+        .build(),
+
+    // Gez
+    new ServiceBuilder('Gez')
+        .url((phone) => `https://gezteknoloji.arabulucuyuz.net:443/api/Account/get-phone-number-confirmation-code-for-new-user?phonenumber=90${phone}`)
+        .method('GET')
+        .timeout(6000)
+        .build(),
+
+    // Jetle
+    new ServiceBuilder('Jetle')
+        .url((phone) => `http://ws.geowix.com:80/GeoCourier/SubmitPhoneToLogin?phonenumber=${phone}&firmaID=1048`)
+        .method('GET')
+        .timeout(6000)
+        .build(),
+
+    // Rabbit
+    new ServiceBuilder('Rabbit')
+        .url('https://api.rbbt.com.tr:443/v1/auth/authenticate')
+        .headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate',
+            'User-Agent': 'Rabbit/1.0.2 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'tr-TR,tr;q=0.9'
+        })
+        .json((phone) => ({
+            mobile_number: '+90' + phone,
+            os_name: 'android',
+            os_version: '7.1.2',
+            app_version: '1.0.2(12)',
+            push_id: '-'
+        }))
+        .timeout(6000)
+        .build(),
+
+    // Roombadi
+    ServiceBuilder.jsonApi('Roombadi',
+        'https://api.roombadi.com:443/api/v1/auth/otp/authenticate',
+        (phone) => ({
+            phone: phone,
+            countryId: 2
+        })
+    ),
+
+    // Hey Scooter (V14 endpoint - original)
+    new ServiceBuilder('HeyScooter')
+        .url((phone) => `https://heyapi.heymobility.tech:443/V14//api/User/ActivationCodeRequest?organizationId=9DCA312E-18C8-4DAE-AE65-01FEAD558739&phonenumber=${phone}&requestid=18bca4e4-2f45-41b0-b054-3efd5b2c9c57-20230730&territoryId=738211d4-fd9d-4168-81a6-b7dbf91170e9`)
+        .headers({
+            Accept: 'application/json, text/plain, */*',
+            'Accept-Encoding': 'gzip, deflate',
+            'User-Agent': 'HEY!%20Scooter/143 CFNetwork/1335.0.3.2 Darwin/21.6.0',
+            'Accept-Language': 'tr'
+        })
+        .timeout(6000)
+        .build(),
+
+    // Hey Scooter (Alternative V9 endpoint)
+    new ServiceBuilder('HeyScooterV9')
+        .url((phone) => `https://heyapi.heymobility.tech:443/V9//api/User/ActivationCodeRequest?organizationId=9DCA312E-18C8-4DAE-AE65-01FEAD558739&phonenumber=${phone}`)
+        .headers({
+            'user-agent': 'okhttp/3.12.1'
+        })
+        .timeout(6000)
+        .build()
 ];
 
 module.exports = transportServices;
